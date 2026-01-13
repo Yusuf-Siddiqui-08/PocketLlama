@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7E9C92352F14340F004AAD91 /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = 7E9C92342F14340F004AAD91 /* LLM */; };
+		7EE0DA002F15F25600B68F01 /* PocketLlamaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE0D9F82F15F14D00B68F01 /* PocketLlamaTests.swift */; };
+		7EE0DA012F15F26900B68F01 /* PocketLlamaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE0D9FA2F15F14D00B68F01 /* PocketLlamaUITests.swift */; };
+		7EE0DA022F15F27000B68F01 /* PocketLlamaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE0D9FB2F15F14D00B68F01 /* PocketLlamaUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7E9C92172F1432D5004AAD91 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,25 +31,55 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7E9C92092F1432D4004AAD91 /* PocketOllama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PocketOllama.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7E9C92162F1432D5004AAD91 /* PocketOllamaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PocketOllamaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7E9C92202F1432D5004AAD91 /* PocketOllamaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PocketOllamaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E9C92092F1432D4004AAD91 /* PocketLlama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PocketLlama.app; path = "/Users/yusufsiddiqui/XCodeProjects/PocketLlama/build/Debug-iphoneos/PocketLlama.app"; sourceTree = "<absolute>"; };
+		7E9C92162F1432D5004AAD91 /* PocketLlamaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PocketLlamaTests.xctest; path = "/Users/yusufsiddiqui/XCodeProjects/PocketLlama/build/Debug-iphoneos/PocketLlama.app/PlugIns/PocketLlamaTests.xctest"; sourceTree = "<absolute>"; };
+		7E9C92202F1432D5004AAD91 /* PocketLlamaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PocketLlamaUITests.xctest; path = "/Users/yusufsiddiqui/XCodeProjects/PocketLlama/build/Debug-iphoneos/PocketLlamaUITests-Runner.app/PlugIns/PocketLlamaUITests.xctest"; sourceTree = "<absolute>"; };
+		7EE0D9F82F15F14D00B68F01 /* PocketLlamaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PocketLlamaTests.swift; sourceTree = "<group>"; };
+		7EE0D9FA2F15F14D00B68F01 /* PocketLlamaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PocketLlamaUITests.swift; sourceTree = "<group>"; };
+		7EE0D9FB2F15F14D00B68F01 /* PocketLlamaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PocketLlamaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7E9C92922F15EC6F004AAD91 /* Exceptions for "PocketLlama" folder in "PocketLlama" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				ChatView.swift,
+				ChatViewModel.swift,
+				ContentView.swift,
+				DownloadManager.swift,
+				ModelListView.swift,
+				ModelOption.swift,
+				PocketLlamaApp.swift,
+				SettingsView.swift,
+			);
+			target = 7E9C92082F1432D4004AAD91 /* PocketLlama */;
+		};
+		7E9C92932F15EC6F004AAD91 /* Exceptions for "PocketLlama" folder in "PocketLlamaTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				ChatView.swift,
+				ChatViewModel.swift,
+				ContentView.swift,
+				DownloadManager.swift,
+				ModelListView.swift,
+				ModelOption.swift,
+				PocketLlamaApp.swift,
+				SettingsView.swift,
+			);
+			target = 7E9C92152F1432D5004AAD91 /* PocketLlamaTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7E9C920B2F1432D4004AAD91 /* PocketOllama */ = {
+		7E9C92882F15EC6F004AAD91 /* PocketLlama */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PocketOllama;
-			sourceTree = "<group>";
-		};
-		7E9C92192F1432D5004AAD91 /* PocketOllamaTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PocketOllamaTests;
-			sourceTree = "<group>";
-		};
-		7E9C92232F1432D5004AAD91 /* PocketOllamaUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PocketOllamaUITests;
+			exceptions = (
+				7E9C92922F15EC6F004AAD91 /* Exceptions for "PocketLlama" folder in "PocketLlama" target */,
+				7E9C92932F15EC6F004AAD91 /* Exceptions for "PocketLlama" folder in "PocketLlamaTests" target */,
+			);
+			path = PocketLlama;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E9C92352F14340F004AAD91 /* LLM in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,29 +113,35 @@
 		7E9C92002F1432D4004AAD91 = {
 			isa = PBXGroup;
 			children = (
-				7E9C920B2F1432D4004AAD91 /* PocketOllama */,
-				7E9C92192F1432D5004AAD91 /* PocketOllamaTests */,
-				7E9C92232F1432D5004AAD91 /* PocketOllamaUITests */,
-				7E9C920A2F1432D4004AAD91 /* Products */,
+				7E9C92882F15EC6F004AAD91 /* PocketLlama */,
+				7EE0D9F92F15F14D00B68F01 /* PocketLlamaTests */,
+				7EE0D9FC2F15F14D00B68F01 /* PocketLlamaUITests */,
 			);
 			sourceTree = "<group>";
 		};
-		7E9C920A2F1432D4004AAD91 /* Products */ = {
+		7EE0D9F92F15F14D00B68F01 /* PocketLlamaTests */ = {
 			isa = PBXGroup;
 			children = (
-				7E9C92092F1432D4004AAD91 /* PocketOllama.app */,
-				7E9C92162F1432D5004AAD91 /* PocketOllamaTests.xctest */,
-				7E9C92202F1432D5004AAD91 /* PocketOllamaUITests.xctest */,
+				7EE0D9F82F15F14D00B68F01 /* PocketLlamaTests.swift */,
 			);
-			name = Products;
+			path = PocketLlamaTests;
+			sourceTree = "<group>";
+		};
+		7EE0D9FC2F15F14D00B68F01 /* PocketLlamaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7EE0D9FA2F15F14D00B68F01 /* PocketLlamaUITests.swift */,
+				7EE0D9FB2F15F14D00B68F01 /* PocketLlamaUITestsLaunchTests.swift */,
+			);
+			path = PocketLlamaUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7E9C92082F1432D4004AAD91 /* PocketOllama */ = {
+		7E9C92082F1432D4004AAD91 /* PocketLlama */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E9C922A2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketOllama" */;
+			buildConfigurationList = 7E9C922A2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketLlama" */;
 			buildPhases = (
 				7E9C92052F1432D4004AAD91 /* Sources */,
 				7E9C92062F1432D4004AAD91 /* Frameworks */,
@@ -107,19 +151,17 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				7E9C920B2F1432D4004AAD91 /* PocketOllama */,
-			);
-			name = PocketOllama;
+			name = PocketLlama;
 			packageProductDependencies = (
+				7E9C92342F14340F004AAD91 /* LLM */,
 			);
 			productName = PocketOllama;
-			productReference = 7E9C92092F1432D4004AAD91 /* PocketOllama.app */;
+			productReference = 7E9C92092F1432D4004AAD91 /* PocketLlama.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7E9C92152F1432D5004AAD91 /* PocketOllamaTests */ = {
+		7E9C92152F1432D5004AAD91 /* PocketLlamaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E9C922D2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketOllamaTests" */;
+			buildConfigurationList = 7E9C922D2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketLlamaTests" */;
 			buildPhases = (
 				7E9C92122F1432D5004AAD91 /* Sources */,
 				7E9C92132F1432D5004AAD91 /* Frameworks */,
@@ -131,18 +173,18 @@
 				7E9C92182F1432D5004AAD91 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				7E9C92192F1432D5004AAD91 /* PocketOllamaTests */,
+				7E9C92882F15EC6F004AAD91 /* PocketLlama */,
 			);
-			name = PocketOllamaTests;
+			name = PocketLlamaTests;
 			packageProductDependencies = (
 			);
 			productName = PocketOllamaTests;
-			productReference = 7E9C92162F1432D5004AAD91 /* PocketOllamaTests.xctest */;
+			productReference = 7E9C92162F1432D5004AAD91 /* PocketLlamaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7E9C921F2F1432D5004AAD91 /* PocketOllamaUITests */ = {
+		7E9C921F2F1432D5004AAD91 /* PocketLlamaUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E9C92302F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketOllamaUITests" */;
+			buildConfigurationList = 7E9C92302F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketLlamaUITests" */;
 			buildPhases = (
 				7E9C921C2F1432D5004AAD91 /* Sources */,
 				7E9C921D2F1432D5004AAD91 /* Frameworks */,
@@ -153,14 +195,11 @@
 			dependencies = (
 				7E9C92222F1432D5004AAD91 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				7E9C92232F1432D5004AAD91 /* PocketOllamaUITests */,
-			);
-			name = PocketOllamaUITests;
+			name = PocketLlamaUITests;
 			packageProductDependencies = (
 			);
 			productName = PocketOllamaUITests;
-			productReference = 7E9C92202F1432D5004AAD91 /* PocketOllamaUITests.xctest */;
+			productReference = 7E9C92202F1432D5004AAD91 /* PocketLlamaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +225,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7E9C92042F1432D4004AAD91 /* Build configuration list for PBXProject "PocketOllama" */;
+			buildConfigurationList = 7E9C92042F1432D4004AAD91 /* Build configuration list for PBXProject "PocketLlama" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -195,14 +234,17 @@
 			);
 			mainGroup = 7E9C92002F1432D4004AAD91;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7E9C92332F14340F004AAD91 /* XCRemoteSwiftPackageReference "LLM" */,
+			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 7E9C920A2F1432D4004AAD91 /* Products */;
+			productRefGroup = 7E9C92002F1432D4004AAD91;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7E9C92082F1432D4004AAD91 /* PocketOllama */,
-				7E9C92152F1432D5004AAD91 /* PocketOllamaTests */,
-				7E9C921F2F1432D5004AAD91 /* PocketOllamaUITests */,
+				7E9C92082F1432D4004AAD91 /* PocketLlama */,
+				7E9C92152F1432D5004AAD91 /* PocketLlamaTests */,
+				7E9C921F2F1432D5004AAD91 /* PocketLlamaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -243,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EE0DA002F15F25600B68F01 /* PocketLlamaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +293,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EE0DA022F15F27000B68F01 /* PocketLlamaUITestsLaunchTests.swift in Sources */,
+				7EE0DA012F15F26900B68F01 /* PocketLlamaUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,12 +303,12 @@
 /* Begin PBXTargetDependency section */
 		7E9C92182F1432D5004AAD91 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7E9C92082F1432D4004AAD91 /* PocketOllama */;
+			target = 7E9C92082F1432D4004AAD91 /* PocketLlama */;
 			targetProxy = 7E9C92172F1432D5004AAD91 /* PBXContainerItemProxy */;
 		};
 		7E9C92222F1432D5004AAD91 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7E9C92082F1432D4004AAD91 /* PocketOllama */;
+			target = 7E9C92082F1432D4004AAD91 /* PocketLlama */;
 			targetProxy = 7E9C92212F1432D5004AAD91 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -395,11 +440,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PocketLlama/PocketLlama.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5DCYATWYDV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PocketLlama;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -410,7 +458,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketOllama;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketLlama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -427,11 +475,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PocketLlama/PocketLlama.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5DCYATWYDV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PocketLlama;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -442,7 +493,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketOllama;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketLlama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -464,7 +515,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketOllamaTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketLlamaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -472,7 +523,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PocketOllama.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PocketOllama";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PocketLlama.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PocketLlama";
 			};
 			name = Debug;
 		};
@@ -486,7 +537,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketOllamaTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketLlamaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -494,7 +545,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PocketOllama.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PocketOllama";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PocketLlama.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PocketLlama";
 			};
 			name = Release;
 		};
@@ -506,7 +557,7 @@
 				DEVELOPMENT_TEAM = 5DCYATWYDV;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketOllamaUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketLlamaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -526,7 +577,7 @@
 				DEVELOPMENT_TEAM = 5DCYATWYDV;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketOllamaUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yusuf.PocketLlamaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -541,7 +592,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7E9C92042F1432D4004AAD91 /* Build configuration list for PBXProject "PocketOllama" */ = {
+		7E9C92042F1432D4004AAD91 /* Build configuration list for PBXProject "PocketLlama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E9C92282F1432D5004AAD91 /* Debug */,
@@ -550,7 +601,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E9C922A2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketOllama" */ = {
+		7E9C922A2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketLlama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E9C922B2F1432D5004AAD91 /* Debug */,
@@ -559,7 +610,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E9C922D2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketOllamaTests" */ = {
+		7E9C922D2F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketLlamaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E9C922E2F1432D5004AAD91 /* Debug */,
@@ -568,7 +619,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E9C92302F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketOllamaUITests" */ = {
+		7E9C92302F1432D5004AAD91 /* Build configuration list for PBXNativeTarget "PocketLlamaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E9C92312F1432D5004AAD91 /* Debug */,
@@ -578,6 +629,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7E9C92332F14340F004AAD91 /* XCRemoteSwiftPackageReference "LLM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/eastriverlee/LLM.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7E9C92342F14340F004AAD91 /* LLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E9C92332F14340F004AAD91 /* XCRemoteSwiftPackageReference "LLM" */;
+			productName = LLM;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7E9C92012F1432D4004AAD91 /* Project object */;
 }

@@ -1,13 +1,13 @@
 //
-//  PocketOllamaUITestsLaunchTests.swift
-//  PocketOllamaUITests
+//  PocketLlamaUITestsLaunchTests.swift
+//  PocketLlamaUITests
 //
 //  Created by Yusuf Siddiqui on 2026-01-11.
 //
 
 import XCTest
 
-final class PocketOllamaUITestsLaunchTests: XCTestCase {
+final class PocketLlamaUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

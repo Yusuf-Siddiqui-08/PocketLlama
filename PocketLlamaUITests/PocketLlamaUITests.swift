@@ -1,13 +1,13 @@
 //
-//  PocketOllamaUITests.swift
-//  PocketOllamaUITests
+//  PocketLlamaUITests.swift
+//  PocketLlamaUITests
 //
 //  Created by Yusuf Siddiqui on 2026-01-11.
 //
 
 import XCTest
 
-final class PocketOllamaUITests: XCTestCase {
+final class PocketLlamaUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
