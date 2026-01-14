@@ -1,4 +1,4 @@
- //
+//
 //  ChatView.swift
 //  PocketLlama
 //
@@ -21,7 +21,6 @@ struct ChatView: View {
     @State private var errorMessage: String? = nil
     
     var body: some View {
-        NavigationView {
             VStack {
                 ScrollViewReader { proxy in
                     ScrollView {
@@ -66,7 +65,7 @@ struct ChatView: View {
                     }
                 }
             }
-            .onAppear {
+            .task {
                 if currentModelFilename.isEmpty {
                     let models = installedModels()
                     if models.count == 1 { currentModelFilename = models[0].filename }
@@ -80,7 +79,6 @@ struct ChatView: View {
             } message: {
                 Text(errorMessage ?? "")
             }
-        }
     }
 }
 

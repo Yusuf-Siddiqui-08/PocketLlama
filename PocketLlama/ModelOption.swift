@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ModelOption: Identifiable {
+struct ModelOption: Identifiable, Sendable {
     let id = UUID()
     let name: String
     let filename: String

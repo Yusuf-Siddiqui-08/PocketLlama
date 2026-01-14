@@ -84,33 +84,53 @@ class ChatViewModel: ObservableObject {
     }
 
     func autoLoadModel() {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        
-        let modelToLoadURL: URL?
-        if let selected = selectedModelURL, fileManager.fileExists(atPath: selected.path) {
-            modelToLoadURL = selected
-        } else if let files = try? fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil),
-                  let firstModel = files.first(where: { $0.pathExtension == "gguf" }) {
-            modelToLoadURL = firstModel
-        } else {
-            modelToLoadURL = nil
-        }
-
-        guard let url = modelToLoadURL else {
-            messages.append("System: No models found. Please download one in the Library tab.")
-            return
-        }
-
-        self.modelURL = url
-        
         // 1. Indicate loading immediately
         self.isLoading = true
-        messages.append("System: Loading \(url.lastPathComponent)...")
-        
-        // 2. Run heavy work in the background
+        self.messages.append("System: Scanning for models...")
+
         Task.detached {
-            // This runs on a background thread, not blocking the UI
+            let fileManager = FileManager.default
+            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            
+            // Access current filename on MainActor safely
+            let filename = await MainActor.run { return self.currentModelFilename }
+            
+            let modelToLoadURL: URL?
+            
+            if !filename.isEmpty {
+                 let specificURL = documentsURL.appendingPathComponent(filename)
+                 if fileManager.fileExists(atPath: specificURL.path) {
+                     modelToLoadURL = specificURL
+                 } else {
+                     modelToLoadURL = nil
+                 }
+            } else {
+                if let files = try? fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil),
+                   let firstModel = files.first(where: { $0.pathExtension == "gguf" }) {
+                    modelToLoadURL = firstModel
+                } else {
+                    modelToLoadURL = nil
+                }
+            }
+
+            guard let url = modelToLoadURL else {
+                await MainActor.run {
+                    self.messages.removeLast() // Remove "Scanning..."
+                    self.messages.append("System: No models found. Please download one in the Library tab.")
+                    self.isLoading = false
+                }
+                return
+            }
+            
+            await MainActor.run {
+                self.modelURL = url
+                if let last = self.messages.last, last == "System: Scanning for models..." {
+                    self.messages.removeLast()
+                }
+                self.messages.append("System: Loading \(url.lastPathComponent)...")
+            }
+            
+            // 2. Run heavy work in the background
             let newBot = LLM(from: url)
             
             // 3. Update UI back on the Main Thread

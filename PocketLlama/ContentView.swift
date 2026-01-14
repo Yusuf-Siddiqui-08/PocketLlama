@@ -1,41 +1,65 @@
 import SwiftUI
 
+enum TabItem: Hashable {
+    case library, chat, settings
+}
+
 struct ContentView: View {
-    // Initialize the Source of Truth here
     @StateObject private var downloadManager = DownloadManager()
-    
+    @State private var selectedTab: TabItem? = .library
     @AppStorage("appAppearance") private var appAppearance: String = "system"
-    private var preferredScheme: ColorScheme? {
-        switch appAppearance {
-        case "light": return .light
-        case "dark": return .dark
-        default: return nil // system
+
+    var body: some View {
+        Group {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                IPadSidebarLayout()
+            } else {
+                IPhoneTabLayout(selectedTab: $selectedTab)
+            }
         }
+        .preferredColorScheme(appAppearance == "light" ? .light : (appAppearance == "dark" ? .dark : nil))
+        .environmentObject(downloadManager)
     }
+}
+
+// MARK: - iPad Two-Column Layout
+struct IPadSidebarLayout: View {
+    var body: some View {
+        NavigationSplitView {
+            // Sidebar: Wrap in a stack so title and toolbars work
+            NavigationStack {
+                ModelListView()
+            }
+        } detail: {
+            // Main Content: This NavigationStack forces the chat to fill the space
+            NavigationStack {
+                ChatView()
+                    .frame(maxWidth: .infinity) // Ensures it stretches to fill the right side
+            }
+        }
+        // Use default split view style for compatibility across iOS versions
+    }
+}
+
+// MARK: - iPhone Layout (Modified for missing NavigationViews)
+struct IPhoneTabLayout: View {
+    @Binding var selectedTab: TabItem?
     
     var body: some View {
-        TabView {
-            // Tab 1: Library
-            ModelListView()
-                .tabItem {
-                    Label("Library", systemImage: "books.vertical")
-                }
+        TabView(selection: $selectedTab) {
+            // On iPhone, we must add NavigationStacks back since we removed them from the sub-views
+            NavigationStack { ModelListView() }
+                .tabItem { Label("Library", systemImage: "books.vertical") }
+                .tag(TabItem.library as TabItem?)
             
-            // Tab 2: Chat
-            ChatView()
-                .tabItem {
-                    Label("Chat", systemImage: "message.fill")
-                }
+            NavigationStack { ChatView() }
+                .tabItem { Label("Chat", systemImage: "message.fill") }
+                .tag(TabItem.chat as TabItem?)
             
-            // Tab 3: Settings
-            SettingsView()
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape")
-                }
+            NavigationStack { SettingsView() }
+                .tabItem { Label("Settings", systemImage: "gearshape") }
+                .tag(TabItem.settings as TabItem?)
         }
-        .preferredColorScheme(preferredScheme)
-        // Inject the manager into the environment for all child views
-        .environmentObject(downloadManager)
     }
 }
 
