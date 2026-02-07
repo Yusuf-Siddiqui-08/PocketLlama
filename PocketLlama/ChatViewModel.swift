@@ -11,6 +11,8 @@ import Combine
 import LLM
 
 class ChatViewModel: ObservableObject {
+    static let shared = ChatViewModel()
+    
     @AppStorage("currentModelFilename") private var currentModelFilename: String = ""
     private var selectedModelURL: URL? {
         guard !currentModelFilename.isEmpty else { return nil }
@@ -21,6 +23,11 @@ class ChatViewModel: ObservableObject {
     @Published var inputText = ""
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
+    
+    // Auto-save properties
+    @Published var isAutoSaveEnabled = false
+    @Published var showDeleteConfirmation = false  // For menu bar delete command
+    var currentSessionId: UUID? = nil  // Tracks the current session for auto-save updates
 
     private enum ChatError: Error {
         case timeout
@@ -305,6 +312,11 @@ class ChatViewModel: ObservableObject {
         }
         
         self.isLoading = false
+        
+        // Auto-save if enabled
+        if isAutoSaveEnabled {
+            performAutoSave()
+        }
     }
     
     func clearChat() {
@@ -312,6 +324,11 @@ class ChatViewModel: ObservableObject {
         let style = self.currentAnswerStyle()
         chatHistory = self.systemPrompt(for: style)
         isBotContextActive = false
+        
+        // Reset auto-save state
+        isAutoSaveEnabled = false
+        currentSessionId = nil
+        
         if let url = modelURL {
             bot = LLM(from: url)
         }
@@ -334,5 +351,64 @@ class ChatViewModel: ObservableObject {
     
     private func currentAnswerStyle() -> String {
         UserDefaults.standard.string(forKey: "answerStyle") ?? "simple"
+    }
+    
+    // MARK: - Chat History
+    
+    /// Creates a ChatSession from the current state for saving
+    func createSavableSession(modelFilename: String) -> ChatSession {
+        return ChatSession(
+            id: UUID(),
+            title: ChatSession.generateTitle(from: messages),
+            messages: messages,
+            modelFilename: modelFilename,
+            createdAt: Date(),
+            lastChatAt: Date()
+        )
+    }
+    
+    /// Loads a saved session, replacing current chat
+    @MainActor
+    func loadSession(_ session: ChatSession) {
+        // Clear and replace messages with saved session
+        self.messages = session.messages
+        
+        // Track this session for auto-save updates
+        self.currentSessionId = session.id
+        
+        // Reset the bot context for the loaded session
+        let style = currentAnswerStyle()
+        self.chatHistory = systemPrompt(for: style)
+        self.isBotContextActive = false
+        
+        // Re-initialize the bot if needed
+        if let url = self.modelURL {
+            self.bot = LLM(from: url)
+        }
+        
+        // Force UI refresh by triggering objectWillChange
+        self.objectWillChange.send()
+    }
+    
+    /// Performs auto-save of current chat
+    private func performAutoSave() {
+        // Create or update session
+        let sessionId = currentSessionId ?? UUID()
+        
+        // If this is a new session (first auto-save), store the ID
+        if currentSessionId == nil {
+            currentSessionId = sessionId
+        }
+        
+        let session = ChatSession(
+            id: sessionId,
+            title: ChatSession.generateTitle(from: messages),
+            messages: messages,
+            modelFilename: currentModelFilename,
+            createdAt: Date(),  // Will be ignored on update if session exists
+            lastChatAt: Date()
+        )
+        
+        ChatHistoryManager.shared.saveSession(session)
     }
 }

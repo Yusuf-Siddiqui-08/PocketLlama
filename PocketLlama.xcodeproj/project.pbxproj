@@ -45,6 +45,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				ChatHistoryManager.swift,
+				ChatHistoryView.swift,
+				ChatSession.swift,
 				ChatView.swift,
 				ChatViewModel.swift,
 				ContentView.swift,
@@ -60,6 +63,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				ChatHistoryManager.swift,
+				ChatHistoryView.swift,
+				ChatSession.swift,
 				ChatView.swift,
 				ChatViewModel.swift,
 				ContentView.swift,

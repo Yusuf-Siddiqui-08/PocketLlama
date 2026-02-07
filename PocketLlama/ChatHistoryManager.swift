@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 /// Manages persistence of chat sessions to local storage
 class ChatHistoryManager: ObservableObject {
@@ -92,6 +93,22 @@ class ChatHistoryManager: ObservableObject {
         }
     }
     
+    /// Deletes all saved chat sessions
+    func deleteAllSessions() {
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(at: historyDirectoryURL, includingPropertiesForKeys: nil)
+            let jsonFiles = fileURLs.filter { $0.pathExtension == "json" }
+            
+            for fileURL in jsonFiles {
+                try fileManager.removeItem(at: fileURL)
+            }
+            
+            loadAllSessions()
+        } catch {
+            print("Failed to delete all chat sessions: \(error)")
+        }
+    }
+    
     // MARK: - Session Size
     
     func getSessionSize(id: UUID) -> Int64 {
@@ -111,5 +128,13 @@ class ChatHistoryManager: ObservableObject {
         formatter.allowedUnits = [.useBytes, .useKB, .useMB]
         formatter.countStyle = .file
         return formatter.string(fromByteCount: bytes)
+    }
+    
+    /// Returns the display name for a model filename, or the filename if not found
+    func getModelDisplayName(for filename: String) -> String {
+        if let model = availableModels.first(where: { $0.filename == filename }) {
+            return model.name
+        }
+        return filename
     }
 }

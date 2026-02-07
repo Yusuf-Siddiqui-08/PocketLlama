@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum TabItem: Hashable {
-    case library, chat, settings
+    case library, chat, history, settings
 }
 
 struct ContentView: View {
@@ -19,25 +19,55 @@ struct ContentView: View {
         }
         .preferredColorScheme(appAppearance == "light" ? .light : (appAppearance == "dark" ? .dark : nil))
         .environmentObject(downloadManager)
+        .onReceive(NotificationCenter.default.publisher(for: .loadChatSession)) { _ in
+            // Switch to chat tab when a session is loaded
+            selectedTab = .chat
+        }
     }
 }
 
 // MARK: - iPad Two-Column Layout
 struct IPadSidebarLayout: View {
+    @State private var selectedView: String? = "chat"
+    
     var body: some View {
         NavigationSplitView {
-            // Sidebar: Wrap in a stack so title and toolbars work
-            NavigationStack {
-                ModelListView()
+            // Sidebar with navigation options
+            List(selection: $selectedView) {
+                NavigationLink(value: "library") {
+                    Label("Library", systemImage: "books.vertical")
+                }
+                NavigationLink(value: "chat") {
+                    Label("Chat", systemImage: "message.fill")
+                }
+                NavigationLink(value: "history") {
+                    Label("History", systemImage: "clock.arrow.circlepath")
+                }
+                NavigationLink(value: "settings") {
+                    Label("Settings", systemImage: "gearshape")
+                }
             }
+            .navigationTitle("PocketLlama")
         } detail: {
-            // Main Content: This NavigationStack forces the chat to fill the space
             NavigationStack {
-                ChatView()
-                    .frame(maxWidth: .infinity) // Ensures it stretches to fill the right side
+                switch selectedView {
+                case "library":
+                    ModelListView()
+                case "chat":
+                    ChatView()
+                case "history":
+                    ChatHistoryView()
+                case "settings":
+                    SettingsView()
+                default:
+                    ChatView()
+                }
             }
         }
-        // Use default split view style for compatibility across iOS versions
+        .onReceive(NotificationCenter.default.publisher(for: .loadChatSession)) { _ in
+            // Switch to chat view when a session is loaded
+            selectedView = "chat"
+        }
     }
 }
 
@@ -55,6 +85,10 @@ struct IPhoneTabLayout: View {
             NavigationStack { ChatView() }
                 .tabItem { Label("Chat", systemImage: "message.fill") }
                 .tag(TabItem.chat as TabItem?)
+            
+            NavigationStack { ChatHistoryView() }
+                .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
+                .tag(TabItem.history as TabItem?)
             
             NavigationStack { SettingsView() }
                 .tabItem { Label("Settings", systemImage: "gearshape") }

@@ -18,6 +18,7 @@ struct SettingsView: View {
     
     // Store the models in State so we don't hit the disk constantly
     @State private var cachedModels: [ModelOption] = []
+    @State private var showClearAllChatsConfirmation = false
     
     init(onBack: (() -> Void)? = nil) {
         self.onBack = onBack
@@ -61,6 +62,27 @@ struct SettingsView: View {
             Section(footer: Text("Changes apply to new chats. Use the trash icon in Chat to clear and restart with the selected style.")) {
                 EmptyView()
             }
+            
+            Section(header: Text("Data Management")) {
+                Button(role: .destructive) {
+                    showClearAllChatsConfirmation = true
+                } label: {
+                    HStack {
+                        Text("Clear All Saved Chats")
+                        Spacer()
+                        Text("\(ChatHistoryManager.shared.sessions.count) chats")
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+        }
+        .alert("Clear All Saved Chats?", isPresented: $showClearAllChatsConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Clear All", role: .destructive) {
+                ChatHistoryManager.shared.deleteAllSessions()
+            }
+        } message: {
+            Text("This will permanently delete all \(ChatHistoryManager.shared.sessions.count) saved chats. This action cannot be undone.")
         }
         .navigationTitle("Settings")
         .toolbar {

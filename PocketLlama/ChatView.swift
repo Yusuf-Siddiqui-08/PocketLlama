@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatView: View {
-    @StateObject var vm = ChatViewModel()
+    @ObservedObject var vm = ChatViewModel.shared
     @AppStorage("currentModelFilename") private var currentModelFilename: String = ""
     
     private var currentModelDisplayName: String {
@@ -19,6 +19,8 @@ struct ChatView: View {
     }
     
     @State private var errorMessage: String? = nil
+    @State private var showingSaveConfirmation = false
+    @State private var showingSavedAlert = false
     
     var body: some View {
             VStack {
@@ -60,8 +62,25 @@ struct ChatView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { vm.clearChat() }) {
-                        Image(systemName: "trash").foregroundColor(.red)
+                    Menu {
+                        Button(action: { vm.isAutoSaveEnabled.toggle() }) {
+                            Label("Auto-Save", systemImage: vm.isAutoSaveEnabled ? "checkmark.square.fill" : "square")
+                        }
+                        .menuActionDismissBehavior(.disabled)
+                        
+                        Divider()
+                        
+                        Button(action: { saveCurrentChat() }) {
+                            Label("Save Chat", systemImage: "square.and.arrow.down")
+                        }
+                        .disabled(!hasUserMessages)
+                        .menuActionDismissBehavior(.disabled)
+                        
+                        Button(role: .destructive, action: { vm.clearChat() }) {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
                     }
                 }
             }
@@ -79,6 +98,31 @@ struct ChatView: View {
             } message: {
                 Text(errorMessage ?? "")
             }
+            .alert("Chat Saved", isPresented: $showingSavedAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Your chat has been saved to History.")
+            }
+            .alert("Delete Chat?", isPresented: $vm.showDeleteConfirmation) {
+                Button("Cancel", role: .cancel) { }
+                Button("Delete", role: .destructive) {
+                    vm.clearChat()
+                }
+            } message: {
+                Text("This will clear all messages. This action cannot be undone.")
+            }
+    }
+    
+    // MARK: - Helpers
+    
+    private var hasUserMessages: Bool {
+        vm.messages.contains { $0.hasPrefix("User:") }
+    }
+    
+    private func saveCurrentChat() {
+        let session = vm.createSavableSession(modelFilename: currentModelFilename)
+        ChatHistoryManager.shared.saveSession(session)
+        showingSavedAlert = true
     }
 }
 

@@ -12,6 +12,11 @@ struct ChatHistoryView: View {
     @State private var selectedSession: ChatSession? = nil
     @State private var showingLoadConfirmation = false
     
+    // Selection mode state
+    @State private var isSelectionMode = false
+    @State private var selectedSessionIds: Set<UUID> = []
+    @State private var showingDeleteConfirmation = false
+    
     var body: some View {
         Group {
             if historyManager.sessions.isEmpty {
@@ -21,6 +26,37 @@ struct ChatHistoryView: View {
             }
         }
         .navigationTitle("History")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if !historyManager.sessions.isEmpty {
+                    Button(isSelectionMode ? "Done" : "Select") {
+                        withAnimation {
+                            isSelectionMode.toggle()
+                            if !isSelectionMode {
+                                selectedSessionIds.removeAll()
+                            }
+                        }
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarLeading) {
+                if isSelectionMode {
+                    Button(selectedSessionIds.count == historyManager.sessions.count ? "Deselect All" : "Select All") {
+                        if selectedSessionIds.count == historyManager.sessions.count {
+                            selectedSessionIds.removeAll()
+                        } else {
+                            selectedSessionIds = Set(historyManager.sessions.map { $0.id })
+                        }
+                    }
+                }
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            if isSelectionMode && !selectedSessionIds.isEmpty {
+                deleteButtonBar
+            }
+        }
         .onAppear {
             historyManager.loadAllSessions()
         }
@@ -35,6 +71,31 @@ struct ChatHistoryView: View {
             }
         } message: {
             Text("This will replace your current chat. Continue?")
+        }
+        .alert("Delete \(selectedSessionIds.count) Chat\(selectedSessionIds.count == 1 ? "" : "s")?", isPresented: $showingDeleteConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Delete", role: .destructive) {
+                deleteSelectedSessions()
+            }
+        } message: {
+            Text("This action cannot be undone.")
+        }
+    }
+    
+    // MARK: - Delete Button Bar
+    
+    private var deleteButtonBar: some View {
+        VStack(spacing: 0) {
+            Divider()
+            Button(role: .destructive) {
+                showingDeleteConfirmation = true
+            } label: {
+                Text("Delete \(selectedSessionIds.count) Chat\(selectedSessionIds.count == 1 ? "" : "s")")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            }
+            .background(Color(UIColor.systemBackground))
         }
     }
     
@@ -61,19 +122,49 @@ struct ChatHistoryView: View {
     private var sessionListView: some View {
         List {
             ForEach(historyManager.sessions) { session in
-                SessionRowView(session: session, historyManager: historyManager)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
+                HStack {
+                    // Selection indicator
+                    if isSelectionMode {
+                        Image(systemName: selectedSessionIds.contains(session.id) ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(selectedSessionIds.contains(session.id) ? .blue : .secondary)
+                            .font(.title2)
+                    }
+                    
+                    SessionRowView(session: session, historyManager: historyManager)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if isSelectionMode {
+                        toggleSelection(for: session)
+                    } else {
                         selectedSession = session
                         showingLoadConfirmation = true
                     }
+                }
             }
             .onDelete(perform: deleteSessions)
+            .deleteDisabled(isSelectionMode)
         }
         .listStyle(.insetGrouped)
     }
     
     // MARK: - Actions
+    
+    private func toggleSelection(for session: ChatSession) {
+        if selectedSessionIds.contains(session.id) {
+            selectedSessionIds.remove(session.id)
+        } else {
+            selectedSessionIds.insert(session.id)
+        }
+    }
+    
+    private func deleteSelectedSessions() {
+        for id in selectedSessionIds {
+            historyManager.deleteSession(id: id)
+        }
+        selectedSessionIds.removeAll()
+        isSelectionMode = false
+    }
     
     private func deleteSessions(at offsets: IndexSet) {
         for index in offsets {
@@ -83,11 +174,14 @@ struct ChatHistoryView: View {
     }
     
     private func loadChat(_ session: ChatSession) {
-        // Post notification to load the chat in ChatViewModel
+        // Load the session directly on the shared ViewModel
+        ChatViewModel.shared.loadSession(session)
+        
+        // Post notification to switch tabs (ContentView listens for this)
         NotificationCenter.default.post(
             name: .loadChatSession,
             object: nil,
-            userInfo: ["session": session]
+            userInfo: nil
         )
         selectedSession = nil
     }
@@ -117,6 +211,11 @@ struct SessionRowView: View {
         return historyManager.formatSize(bytes)
     }
     
+    /// Look up the friendly model name from historyManager, fallback to filename
+    private var modelDisplayName: String {
+        historyManager.getModelDisplayName(for: session.modelFilename)
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(session.title)
@@ -134,7 +233,7 @@ struct SessionRowView: View {
             HStack {
                 Label("Last chat: \(formattedLastChatDate)", systemImage: "clock")
                 Spacer()
-                Text(session.modelFilename)
+                Text(modelDisplayName)
                     .lineLimit(1)
             }
             .font(.caption)
